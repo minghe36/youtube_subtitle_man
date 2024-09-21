@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>youtube字幕君</title>
+  <style>
+    body { 
+      width: 300px; 
+      padding: 10px; 
+      font-family: 'Microsoft YaHei', '微软雅黑', sans-serif;
+    }
+    h1 {
+      font-size: 18px;
+      color: #333;
+    }
+    input {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+    button {
+      background: linear-gradient(to right, #ff416c, #ff4b2b);
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    #message {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #4CAF50;
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>youtube字幕君配置</h1>
+  <label>
+    Dify API Key:
+    <input type="text" id="apiKey" placeholder="请输入Dify API Key">
+  </label>
+  <button id="save">保存</button>
+  <div id="message"></div>
+  <script src="popup.js"></script>
+</body>
+</html>

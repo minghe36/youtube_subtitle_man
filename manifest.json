@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "youtube字幕君",
+  "version": "1.0",
+  "description": "结合dify生成中文文稿",
+  "permissions": ["activeTab", "storage"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "智能字幕.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://www.youtube.com/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "128": "智能字幕.png"
+  }
+}

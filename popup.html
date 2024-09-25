@@ -31,6 +31,7 @@
       margin: 4px 2px;
       cursor: pointer;
       border-radius: 4px;
+      width: 100px;  /* 修改这里 */
     }
     #message {
       margin-top: 10px;
@@ -46,8 +47,12 @@
 <body>
   <h1>youtube字幕君配置</h1>
   <label>
-    Dify API Key:
-    <input type="text" id="apiKey" placeholder="请输入Dify API Key">
+    Dify API Key 用于中文文稿:
+    <input type="text" id="apiKeyTranscript" placeholder="请输入用于中文文稿的Dify API Key">
+  </label>
+  <label>
+    Dify API Key 用于总结:
+    <input type="text" id="apiKeySummary" placeholder="请输入用于总结的Dify API Key">
   </label>
   <button id="save">保存</button>
   <div id="message"></div>

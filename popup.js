@@ -1,37 +1,47 @@
 document.addEventListener('DOMContentLoaded', function() {
-  var apiKeyInput = document.getElementById('apiKey');
-  var saveButton = document.getElementById('save');
-  var message = document.getElementById('message');
+  const apiKeyTranscriptInput = document.getElementById('apiKeyTranscript');
+  const apiKeySummaryInput = document.getElementById('apiKeySummary');
+  const saveButton = document.getElementById('save');
+  const messageDiv = document.getElementById('message');
+  const generateSummaryButton = document.getElementById('generateSummary');
 
-  // 加载保存的设置
-  chrome.storage.sync.get(['difyApiKey'], function(items) {
-    apiKeyInput.value = items.difyApiKey || '';
+  // 加载保存的API keys
+  chrome.storage.sync.get(['apiKeyTranscript', 'apiKeySummary'], function(result) {
+    apiKeyTranscriptInput.value = result.apiKeyTranscript || '';
+    apiKeySummaryInput.value = result.apiKeySummary || '';
   });
 
   saveButton.addEventListener('click', function() {
-    var apiKey = apiKeyInput.value;
+    const apiKeyTranscript = apiKeyTranscriptInput.value.trim();
+    const apiKeySummary = apiKeySummaryInput.value.trim();
+
     chrome.storage.sync.set({
-      difyApiKey: apiKey
+      apiKeyTranscript: apiKeyTranscript,
+      apiKeySummary: apiKeySummary
     }, function() {
-      message.textContent = '设置已保存';
-      setTimeout(function() {
-        message.textContent = '';
-      }, 750);
+      messageDiv.textContent = '保存成功！';
+      
+      // 将summary_key设置到background.js中
+      chrome.runtime.sendMessage({
+        action: 'setSummaryKey',
+        summaryKey: apiKeySummary
+      });
     });
   });
-});
 
-// 以下是原有的功能，暂时注释掉，如果之后需要可以重新启用
-/*
-document.getElementById('generate').addEventListener('click', () => {
-  chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-    chrome.tabs.sendMessage(tabs[0].id, {action: "generateSubtitle"});
+  generateSummaryButton.addEventListener('click', function() {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, {action: "generateSummary"});
+    });
+    messageDiv.textContent = '正在生成中文总结...';
   });
 });
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.action === "subtitleGenerated") {
-    document.getElementById('result').textContent = "中文文稿已生成!";
+  if (message.action === "summaryGenerated") {
+    document.getElementById('message').textContent = "中文总结已生成!";
+    setTimeout(() => {
+      document.getElementById('message').textContent = "";
+    }, 3000);
   }
 });
-*/
